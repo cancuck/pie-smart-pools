@@ -42,14 +42,6 @@ interface PCappedSmartPoolInterface extends Interface {
       encode([_dst, _amount]: [string, BigNumberish]): string;
     }>;
 
-    exitPool: TypedFunctionDescription<{
-      encode([_amount]: [BigNumberish]): string;
-    }>;
-
-    exitPoolTakingloss: TypedFunctionDescription<{
-      encode([_amount, _lossTokens]: [BigNumberish, string[]]): string;
-    }>;
-
     getBPool: TypedFunctionDescription<{ encode([]: []): string }>;
 
     getCap: TypedFunctionDescription<{ encode([]: []): string }>;
@@ -78,10 +70,6 @@ interface PCappedSmartPoolInterface extends Interface {
     }>;
 
     isPublicSwap: TypedFunctionDescription<{ encode([]: []): string }>;
-
-    joinPool: TypedFunctionDescription<{
-      encode([_amount]: [BigNumberish]): string;
-    }>;
 
     name: TypedFunctionDescription<{ encode([]: []): string }>;
 
@@ -285,17 +273,6 @@ export class PCappedSmartPool extends Contract {
       overrides?: TransactionOverrides
     ): Promise<ContractTransaction>;
 
-    exitPool(
-      _amount: BigNumberish,
-      overrides?: TransactionOverrides
-    ): Promise<ContractTransaction>;
-
-    exitPoolTakingloss(
-      _amount: BigNumberish,
-      _lossTokens: string[],
-      overrides?: TransactionOverrides
-    ): Promise<ContractTransaction>;
-
     getBPool(): Promise<string>;
 
     getCap(): Promise<BigNumber>;
@@ -325,11 +302,6 @@ export class PCappedSmartPool extends Contract {
     ): Promise<ContractTransaction>;
 
     isPublicSwap(): Promise<boolean>;
-
-    joinPool(
-      _amount: BigNumberish,
-      overrides?: TransactionOverrides
-    ): Promise<ContractTransaction>;
 
     name(): Promise<string>;
 
@@ -437,17 +409,6 @@ export class PCappedSmartPool extends Contract {
     overrides?: TransactionOverrides
   ): Promise<ContractTransaction>;
 
-  exitPool(
-    _amount: BigNumberish,
-    overrides?: TransactionOverrides
-  ): Promise<ContractTransaction>;
-
-  exitPoolTakingloss(
-    _amount: BigNumberish,
-    _lossTokens: string[],
-    overrides?: TransactionOverrides
-  ): Promise<ContractTransaction>;
-
   getBPool(): Promise<string>;
 
   getCap(): Promise<BigNumber>;
@@ -477,11 +438,6 @@ export class PCappedSmartPool extends Contract {
   ): Promise<ContractTransaction>;
 
   isPublicSwap(): Promise<boolean>;
-
-  joinPool(
-    _amount: BigNumberish,
-    overrides?: TransactionOverrides
-  ): Promise<ContractTransaction>;
 
   name(): Promise<string>;
 
@@ -632,13 +588,6 @@ export class PCappedSmartPool extends Contract {
 
     decreaseApproval(_dst: string, _amount: BigNumberish): Promise<BigNumber>;
 
-    exitPool(_amount: BigNumberish): Promise<BigNumber>;
-
-    exitPoolTakingloss(
-      _amount: BigNumberish,
-      _lossTokens: string[]
-    ): Promise<BigNumber>;
-
     getBPool(): Promise<BigNumber>;
 
     getCap(): Promise<BigNumber>;
@@ -663,8 +612,6 @@ export class PCappedSmartPool extends Contract {
     ): Promise<BigNumber>;
 
     isPublicSwap(): Promise<BigNumber>;
-
-    joinPool(_amount: BigNumberish): Promise<BigNumber>;
 
     name(): Promise<BigNumber>;
 

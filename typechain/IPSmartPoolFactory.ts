@@ -158,19 +158,6 @@ const _abi = [
     type: "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256"
-      }
-    ],
-    name: "exitPool",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
     inputs: [],
     name: "getController",
     outputs: [
@@ -194,19 +181,6 @@ const _abi = [
       }
     ],
     stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256"
-      }
-    ],
-    name: "joinPool",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function"
   },
   {

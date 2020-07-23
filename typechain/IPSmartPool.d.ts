@@ -26,17 +26,9 @@ interface IPSmartPoolInterface extends Interface {
       encode([_amount]: [BigNumberish]): string;
     }>;
 
-    exitPool: TypedFunctionDescription<{
-      encode([_amount]: [BigNumberish]): string;
-    }>;
-
     getController: TypedFunctionDescription<{ encode([]: []): string }>;
 
     getTokens: TypedFunctionDescription<{ encode([]: []): string }>;
-
-    joinPool: TypedFunctionDescription<{
-      encode([_amount]: [BigNumberish]): string;
-    }>;
 
     totalSupply: TypedFunctionDescription<{ encode([]: []): string }>;
 
@@ -101,19 +93,9 @@ export class IPSmartPool extends Contract {
       1: BigNumber[];
     }>;
 
-    exitPool(
-      _amount: BigNumberish,
-      overrides?: TransactionOverrides
-    ): Promise<ContractTransaction>;
-
     getController(): Promise<string>;
 
     getTokens(): Promise<string[]>;
-
-    joinPool(
-      _amount: BigNumberish,
-      overrides?: TransactionOverrides
-    ): Promise<ContractTransaction>;
 
     totalSupply(): Promise<BigNumber>;
 
@@ -150,19 +132,9 @@ export class IPSmartPool extends Contract {
     1: BigNumber[];
   }>;
 
-  exitPool(
-    _amount: BigNumberish,
-    overrides?: TransactionOverrides
-  ): Promise<ContractTransaction>;
-
   getController(): Promise<string>;
 
   getTokens(): Promise<string[]>;
-
-  joinPool(
-    _amount: BigNumberish,
-    overrides?: TransactionOverrides
-  ): Promise<ContractTransaction>;
 
   totalSupply(): Promise<BigNumber>;
 
@@ -202,13 +174,9 @@ export class IPSmartPool extends Contract {
 
     calcTokensForAmount(_amount: BigNumberish): Promise<BigNumber>;
 
-    exitPool(_amount: BigNumberish): Promise<BigNumber>;
-
     getController(): Promise<BigNumber>;
 
     getTokens(): Promise<BigNumber>;
-
-    joinPool(_amount: BigNumberish): Promise<BigNumber>;
 
     totalSupply(): Promise<BigNumber>;
 

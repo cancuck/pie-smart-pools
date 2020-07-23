@@ -27,14 +27,6 @@ contract PCappedSmartPool is PBasicSmartPool {
   }
 
   /**
-        @notice Takes underlying assets and mints smart pool tokens. Enforces the cap
-        @param _amount Amount of pool tokens to mint
-    */
-  function joinPool(uint256 _amount) external override withinCap noReentry {
-    super._joinPool(_amount);
-  }
-
-  /**
         @notice Get the current cap
         @return The current cap in wei
     */
