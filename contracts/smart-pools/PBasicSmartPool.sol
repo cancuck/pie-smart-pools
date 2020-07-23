@@ -202,7 +202,7 @@ contract PBasicSmartPool is IPSmartPool, PCToken, ReentryProtection {
     bPool.unbind(_token);
 
     // If any tokens are in this contract send them to msg.sender
-    uint256 tokenBalance = token.balanceOf(address(this));
+    uint256 tokenBalance = bPool.getBalance(_token);
     if (tokenBalance > 0) {
       require(token.transfer(msg.sender, tokenBalance), "PBasicSmartPool.unbind: transfer failed");
     }
