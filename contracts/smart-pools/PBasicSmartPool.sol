@@ -198,11 +198,14 @@ contract PBasicSmartPool is IPSmartPool, PCToken, ReentryProtection {
   function unbind(address _token) external onlyTokenBinder noReentry {
     IBPool bPool = lpbs().bPool;
     IERC20 token = IERC20(_token);
+
+    // Get the balance from bPool because of broken SNX contract
+    uint256 tokenBalance = bPool.getBalance(_token);
+
     // unbind the token in the bPool
     bPool.unbind(_token);
 
     // If any tokens are in this contract send them to msg.sender
-    uint256 tokenBalance = bPool.getBalance(_token);
     if (tokenBalance > 0) {
       require(token.transfer(msg.sender, tokenBalance), "PBasicSmartPool.unbind: transfer failed");
     }
