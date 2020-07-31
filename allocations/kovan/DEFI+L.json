@@ -9,43 +9,43 @@
             "name": "COMP",
             "decimals": "18",
             "address": "0xc8af1c1A8028788cF710D470021F02061aee823A",
-            "weight": "13.39",
-            "value": "132.9472001146"
+            "weight": "13.3876",
+            "value": "132.947200114604000000000000"
         },
         {
             "name": "KNC",
             "decimals": "18",
             "address": "0xa734fD2FbF439c062Fe1B652A5cee79fB0043a2F",
-            "weight": "10.17",
-            "value": "1.4401692807"
+            "weight": "10.1702",
+            "value": "1.440169280661360000000000"
         },
         {
             "name": "LEND",
             "decimals": "18",
             "address": "0x8Cf39A1caF0F5B9A431C0FAD5cDdD21A0Eb4854C",
-            "weight": "16.49",
-            "value": "0.3339484051"
+            "weight": "16.4911",
+            "value": "0.333948405081436000000000"
         },
         {
             "name": "LINK",
             "decimals": "18",
             "address": "0x220d5e0Fb650929613825b09BA21a2AEaC849185",
             "weight": "25",
-            "value": "7.4366688503"
+            "value": "7.436668850293690000000000"
         }, 
         {
             "name": "MKR",
             "decimals": "18",
             "address": "0x24AAaf144275633B513359137FFa5A6691D3E933",
-            "weight": "20.14",
-            "value": "568.1238465919"
+            "weight": "20.1425",
+            "value": "568.123846591942000000000000"
         },
         {
             "name": "SNX",
             "decimals": "18",
             "address": "0xD43740443390C1C2De839E369B3857bd161C6887",
-            "weight": "14.81",
-            "value": "3.5869313650"
+            "weight": "14.8086",
+            "value": "3.586931365035410000000000"
         }
     ]
 }

@@ -135,7 +135,7 @@ task("deploy-pool-from-factory", "deploys a pie smart pool from the factory")
 
       const allowance = await tokenContract.allowance(await signers[0].getAddress(), factory.address);
       if(allowance.lt(amount)) {
-        const approveTx = await tokenContract.approve(factory.address, constants.WeiPerEther);
+        const approveTx = await tokenContract.approve(factory.address, constants.MaxUint256);
         console.log(`Approved: ${token.address} tx: ${approveTx.hash}`);
         await approveTx.wait(1);
       }
@@ -206,6 +206,7 @@ task("deploy-smart-pool-complete")
     console.log(`Factory deployed at: ${factory.address}`);
     const initTx = await factory.init(taskArgs.balancerFactory);
     console.log(`Initialised smart pool factory tx: {${initTx.hash}}`);
+    await initTx.wait(1);
 
     const config = require(taskArgs.allocation);
 
