@@ -9,29 +9,29 @@
             "name": "BAL",
             "decimals": "18",
             "address": "0xba100000625a3754423978a60c9317c58a424e3d",
-            "weight": "12.75",
-            "value": "9.7039169933"
+            "weight": "12.7491",
+            "value": "9.7039169933297100000000"
         },
         {
             "name": "LRC",
             "decimals": "18",
             "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
-            "weight": "27.25",
-            "value": "0.1078701711"
+            "weight": "27.2509",
+            "value": "0.1078701711241850000000"
         },
         {
             "name": "REN",
             "decimals": "18",
             "address": "0x408e41876cccdc0f92210600ef50372656052a38",
             "weight": "30",
-            "value": "0.1621535361"
+            "value": "0.1621535361187260000000"
         },
         {
             "name": "UMA",
             "decimals": "18",
             "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
             "weight": "30",
-            "value": "4.1060777800"
+            "value": "4.1060777800232000000000"
         }
     ]
 }
