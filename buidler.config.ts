@@ -21,10 +21,13 @@ import LibAddRemoveTokenArtifact from "./artifacts/LibAddRemoveToken.json";
 import LibWeightsArtifact from "./artifacts/LibWeights.json";
 import LibPoolMathArtifact from "./artifacts/LibPoolMath.json";
 
+const {TASK_COMPILE_GET_COMPILER_INPUT} = require("@nomiclabs/buidler/builtin-tasks/task-names");
+
 usePlugin("@nomiclabs/buidler-waffle");
 usePlugin("@nomiclabs/buidler-etherscan");
 usePlugin("solidity-coverage");
 usePlugin("buidler-deploy");
+
 
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const KOVAN_PRIVATE_KEY = process.env.KOVAN_PRIVATE_KEY || "";
@@ -95,6 +98,12 @@ const config: ExtendedBuidlerConfig = {
     apiKey: ETHERSCAN_API_KEY
   },
 };
+
+task(TASK_COMPILE_GET_COMPILER_INPUT).setAction(async (_, __, runSuper) => {
+  const input = await runSuper();
+  input.settings.metadata.useLiteralContent = false;
+  return input;
+});
 
 task("deploy-pie-smart-pool-factory", "deploys a pie smart pool factory")
   .addParam("balancerFactory", "Address of the balancer factory")
