@@ -26,6 +26,8 @@ usePlugin("@nomiclabs/buidler-etherscan");
 usePlugin("solidity-coverage");
 usePlugin("buidler-deploy");
 
+const {TASK_COMPILE_GET_COMPILER_INPUT} = require("@nomiclabs/buidler/builtin-tasks/task-names");
+
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const KOVAN_PRIVATE_KEY = process.env.KOVAN_PRIVATE_KEY || "";
 const KOVAN_PRIVATE_KEY_SECONDARY = process.env.KOVAN_PRIVATE_KEY_SECONDARY || "";
@@ -40,6 +42,12 @@ const PLACE_HOLDER_ADDRESS = "0x1000000000000000000000000000000000000001";
 interface ExtendedBuidlerConfig extends BuidlerConfig {
   [x:string]: any
 }
+
+task(TASK_COMPILE_GET_COMPILER_INPUT).setAction(async (_, __, runSuper) => {
+  const input = await runSuper();
+  input.settings.metadata.useLiteralContent = false;
+  return input;
+})
 
 const config: ExtendedBuidlerConfig = {
   defaultNetwork: "buidlerevm",

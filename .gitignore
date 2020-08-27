@@ -114,3 +114,4 @@ flats.sol
 .coverage_cache/
 .coverage_contracts/
 typechain/
+.coverage_artifacts/
