@@ -1,51 +1,51 @@
 {
-    "name": "PieDAO Test DEFI+L",
-    "symbol": "TDEFI+L",
-    "initialValue": "1",
-    "initialSupply": "100",
-    "cap": "1000",
+    "name": "PieDAO DEFI Large Cap",
+    "symbol": "DEFI+L",
+    "initialValue": "1.98324",
+    "initialSupply": "1",
+    "cap": "5000000",
     "tokens": [
         {
             "name": "COMP",
             "decimals": "18",
             "address": "0xc00e94cb662c3520282e6f5717214004a7f26888",
-            "weight": "13.3876",
-            "value": "132.947200114604000000000000"
+            "weight": "19.0295868405425000",
+            "value": "187.93"
         },
         {
             "name": "KNC",
             "decimals": "18",
             "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-            "weight": "10.1702",
-            "value": "1.440169280661360000000000"
-        },
-        {
-            "name": "LEND",
-            "decimals": "18",
-            "address": "0x80fB784B7eD66730e8b1DBd9820aFD29931aab03",
-            "weight": "16.4911",
-            "value": "0.333948405081436000000000"
+            "weight": "11.6748955918930000",
+            "value": "1.62"
         },
         {
             "name": "LINK",
             "decimals": "18",
             "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
             "weight": "25",
-            "value": "7.436668850293690000000000"
+            "value": "15.04"
         }, 
         {
             "name": "MKR",
             "decimals": "18",
             "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
-            "weight": "20.1425",
-            "value": "568.123846591942000000000000"
+            "weight": "19.9961849775213000",
+            "value": "618.41"
         },
         {
             "name": "SNX",
             "decimals": "18",
             "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
-            "weight": "14.8086",
-            "value": "3.586931365035410000000000"
+            "weight": "19.0459800378622000",
+            "value": "6.75"
+        },
+        {
+            "name": "YFI",
+            "decimals": "18",
+            "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+            "weight": "5.2533525521810200",
+            "value": "17734.89"
         }
     ]
 }

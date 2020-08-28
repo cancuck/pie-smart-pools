@@ -126,8 +126,12 @@ task("deploy-pool-from-factory", "deploys a pie smart pool from the factory")
       tokenAddresses.push(token.address);
       tokenWeights.push(parseEther(token.weight).div(2));
 
+      console.log(token.name);
+
       // Calc amount
-      let amount = new BigNumber((config.initialValue / token.value * token.weight / 100 * config.initialSupply * 10 ** token.decimals).toString());
+      let amount = new BigNumber(Math.floor((config.initialValue / token.value * token.weight / 100 * config.initialSupply * 10 ** token.decimals)).toString());
+
+      console.log(amount.toString());
       tokenAmounts.push(amount);
 
       // Approve factory to spend token
@@ -142,7 +146,7 @@ task("deploy-pool-from-factory", "deploys a pie smart pool from the factory")
       
     }
 
-    const tx = await factory.newProxiedSmartPool(name, symbol, initialSupply, tokenAddresses, tokenAmounts, tokenWeights, cap);
+    const tx = await factory.newProxiedSmartPool(name, symbol, initialSupply, tokenAddresses, tokenAmounts, tokenWeights, cap, {gasLimit: 10000000});
     const receipt = await tx.wait(2); //wait for 2 confirmations
     const event = receipt.events.pop();
     console.log(`Deployed smart pool at : ${event.address}`);
