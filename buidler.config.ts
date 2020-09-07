@@ -3,12 +3,13 @@ require("dotenv").config();
 import { BuidlerConfig, usePlugin, task, internalTask } from "@nomiclabs/buidler/config";
 import { utils, constants, ContractTransaction, Wallet } from "ethers";
 import {deployContract, solidity} from "ethereum-waffle";
-import { parseUnits, parseEther, BigNumberish, BigNumber } from "ethers/utils";
+import { parseUnits, parseEther, BigNumberish, BigNumber, formatParamType, formatEther } from "ethers/utils";
 import { MockTokenFactory } from "@pie-dao/mock-contracts/dist/typechain/MockTokenFactory";
 
 import { IbFactoryFactory } from "./typechain/IbFactoryFactory";
 import { deployBalancerFactory, deployAndGetLibObject, linkArtifact } from "./utils";
 import { IbPoolFactory } from "./typechain/IbPoolFactory";
+import { IbPool } from "./typechain/IbPool"
 import { Ierc20Factory } from "./typechain/Ierc20Factory";
 import { PProxiedFactoryFactory } from "./typechain/PProxiedFactoryFactory";
 
@@ -20,6 +21,8 @@ import LibPoolEntryExitArtifact from "./artifacts/LibPoolEntryExit.json";
 import LibAddRemoveTokenArtifact from "./artifacts/LibAddRemoveToken.json";
 import LibWeightsArtifact from "./artifacts/LibWeights.json";
 import LibPoolMathArtifact from "./artifacts/LibPoolMath.json";
+import { MaxUint256, Zero } from "ethers/constants";
+import { MockToken } from "@pie-dao/mock-contracts/typechain/MockToken";
 
 usePlugin("@nomiclabs/buidler-waffle");
 usePlugin("@nomiclabs/buidler-etherscan");
@@ -275,6 +278,7 @@ task("deploy-mock-token", "deploys a mock token")
     const token = await factory.deploy(taskArgs.name, taskArgs.symbol, taskArgs.decimals);
     await token.mint(await signers[0].getAddress(), constants.WeiPerEther.mul(10000000000000));
     console.log(`Deployed token at: ${token.address}`);
+    return token;
 });
 
 task("deploy-balancer-factory", "deploys a balancer factory")
@@ -282,17 +286,20 @@ task("deploy-balancer-factory", "deploys a balancer factory")
     const signers = await ethers.getSigners();
     const factoryAddress = await deployBalancerFactory(signers[0]);
     console.log(`Deployed balancer factory at: ${factoryAddress}`);
+    return factoryAddress
 });
 
 task("deploy-balancer-pool", "deploys a balancer pool from a factory")
   .addParam("factory", "Address of the balancer pool address")
   .setAction(async(taskArgs, { ethers }) => {
+    console.log(taskArgs.factory);
     const signers = await ethers.getSigners();
     const factory = await IbFactoryFactory.connect(taskArgs.factory, signers[0]);
     const tx = await factory.newBPool();
-    const receipt = await tx.wait(2); // wait for 2 confirmations
+    const receipt = await tx.wait(); // wait for 2 confirmations
     const event = receipt.events.pop();
     console.log(`Deployed balancer pool at : ${event.address}`);
+    return event.address;
 });
 
 task("balancer-bind-token", "binds a token to a balancer pool")
@@ -389,7 +396,63 @@ internalTask("deploy-libraries-and-smartpool")
 
     const contract = (await deploy("PV2SmartPool", {contractName: "PV2SmartPool", from: await signers[0].getAddress(), libraries}));
     return Pv2SmartPoolFactory.connect(contract.address, signers[0]);
-  });
+});
+
+
+task("test-pools").setAction(async(taskArgs, { ethers, run }) => {
+  const signers = await ethers.getSigners();
+  const account = await signers[0].getAddress();
+  const factoryAddress = await run("deploy-balancer-factory")
+
+  console.log("deploying pools");
+  // 98/2
+  const net: IbPool = IbPoolFactory.connect(await run("deploy-balancer-pool", {factory: factoryAddress}), signers[0]);
+  // 2/98
+  const tne: IbPool = IbPoolFactory.connect(await run("deploy-balancer-pool", {factory: factoryAddress}), signers[0]);
+
+  console.log("deploying tokens");
+  const tokenA = await run("deploy-mock-token", {name: "a", symbol: "a"}) as MockToken;
+  const tokenB = await run("deploy-mock-token", {name: "b", symbol: "b"}) as MockToken;
+
+  console.log("minting tokens")
+  await tokenA.mint(account, parseEther("1000000000000"));
+  await tokenB.mint(account, parseEther("1000000000000"));
+
+  console.log("approvals");
+  await tokenA.approve(net.address, MaxUint256);
+  await tokenB.approve(net.address, MaxUint256);
+
+  await tokenA.approve(tne.address, MaxUint256);
+  await tokenB.approve(tne.address, MaxUint256);
+
+
+  console.log("Binding and finalizing");
+  const two = parseEther("1");
+  const ninetyEight = parseEther("49");
+
+  await net.bind(tokenA.address, ninetyEight.mul(10), ninetyEight);
+  await net.bind(tokenB.address, two.mul(10), two);
+  await net.finalize();
+
+  await tne.bind(tokenA.address, two.mul(10), two);
+  await tne.bind(tokenB.address, ninetyEight.mul(10), ninetyEight)
+  await tne.finalize();
+
+  console.log("Buying 1 A token worth of B using 98/2");
+  let balanceBefore = await tokenB.balanceOf(account);
+  await net.swapExactAmountIn(tokenA.address, parseEther("1"), tokenB.address, Zero, MaxUint256);
+  let balanceAfter = await tokenB.balanceOf(account);
+
+  console.log("98/2 bought ", formatEther(balanceAfter.sub(balanceBefore)));
+
+  console.log("Buying 1 A token worth of B using 2/98");
+  balanceBefore = await tokenB.balanceOf(account);
+  await tne.swapExactAmountIn(tokenA.address, parseEther("1"), tokenB.address, Zero, MaxUint256);
+  balanceAfter = await tokenB.balanceOf(account);
+
+  console.log("2/98 bought ", formatEther(balanceAfter.sub(balanceBefore)));
+
+})
 
 
 export default config;
